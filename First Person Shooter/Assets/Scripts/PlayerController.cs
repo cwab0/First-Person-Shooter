@@ -1,9 +1,9 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("Movement")]
     Transform mainCamera;
     [SerializeField] float mouseSensitivity;
     [SerializeField] float moveSpeed;
@@ -18,9 +18,15 @@ public class PlayerController : MonoBehaviour
 
     Vector3 velocity;
 
+    [Header("Gun")]
+    [SerializeField] Gun gunScript;
+
+    InputAction shootAction;
+
 
     void Start()
     {
+
         mainCamera = Camera.main.transform;
         characterController = GetComponent<CharacterController>();
 
@@ -29,14 +35,17 @@ public class PlayerController : MonoBehaviour
 
         moveAction = InputSystem.actions.FindAction("Move");
         jumpAction = InputSystem.actions.FindAction("Jump");
+        shootAction = InputSystem.actions.FindAction("Attack");
     }
 
     void Update()
     {
         HandleLooking();
         HandleMovement();
+        OnShoot();
     }
 
+    #region Movement
     void HandleLooking()
     {
         Vector2 mouseInput = Mouse.current.delta.ReadValue() * Time.deltaTime;
@@ -56,7 +65,7 @@ public class PlayerController : MonoBehaviour
 
         if (characterController.isGrounded)
         {
-            if(velocity.y < 0)
+            if (velocity.y < 0)
             {
                 velocity.y = -2;
             }
@@ -71,4 +80,15 @@ public class PlayerController : MonoBehaviour
 
         characterController.Move(totalMove);
     }
+    #endregion
+
+    #region Gun
+    void OnShoot()
+    {
+        if (shootAction.WasPerformedThisFrame())
+        {
+            gunScript.Shoot();
+        }
+    }
+    #endregion
 }
