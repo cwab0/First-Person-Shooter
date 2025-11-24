@@ -17,11 +17,14 @@ public class Gun : MonoBehaviour
 
     public void Shoot()
     {
-        if (Physics.Raycast(mainCam.position, mainCam.forward, out RaycastHit hit, Mathf.Infinity, layerMask))
+        if (Physics.Raycast(gunPoint.position, mainCam.forward, out RaycastHit hit, Mathf.Infinity, layerMask))
         {
-            Debug.DrawRay(mainCam.position, mainCam.forward * hit.distance, Color.red, 1);
+            Debug.DrawRay(gunPoint.position, mainCam.forward * hit.distance, Color.red, 1);
             Debug.Log("SHOOT");
             //hit.point;
+
+            bulletTrace.positionCount = 2;
+            bulletTrace.SetPositions(new[] { gunPoint.position, hit.point });
         }
     }
 }
