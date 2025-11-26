@@ -1392,7 +1392,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1477102964}
   - component: {fileID: 1477102967}
-  - component: {fileID: 1477102966}
   - component: {fileID: 1477102965}
   m_Layer: 0
   m_Name: UI Camera
@@ -1460,14 +1459,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!81 &1477102966
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1477102963}
-  m_Enabled: 1
 --- !u!20 &1477102967
 Camera:
   m_ObjectHideFlags: 0
@@ -1634,12 +1625,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcbf9271234eeb94fb0be0e4c4d6b98a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gun
-  gunData: {fileID: 0}
+  gunData: {fileID: 11400000, guid: 5ed8dd1f405c2be41a260a6379d45d49, type: 2}
   gunPoint: {fileID: 1771620662}
   layerMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 4294967295
   bulletTrace: {fileID: 1617776572}
+  hitImpact: {fileID: 0}
 --- !u!1 &1573537904
 GameObject:
   m_ObjectHideFlags: 0
@@ -1930,7 +1922,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.02563797
+        value: 0.26006654
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -1990,7 +1982,7 @@ Transform:
   m_GameObject: {fileID: 1617776571}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.6600001, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -25,7 +25,6 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-
         mainCamera = Camera.main.transform;
         characterController = GetComponent<CharacterController>();
 
