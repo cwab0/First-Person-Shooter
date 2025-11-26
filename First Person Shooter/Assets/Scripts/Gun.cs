@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Gun : MonoBehaviour
@@ -17,14 +18,23 @@ public class Gun : MonoBehaviour
 
     public void Shoot()
     {
-        if (Physics.Raycast(gunPoint.position, mainCam.forward, out RaycastHit hit, Mathf.Infinity, layerMask))
+        if (Physics.Raycast(mainCam.position, mainCam.forward, out RaycastHit hit, Mathf.Infinity, layerMask))
         {
-            Debug.DrawRay(gunPoint.position, mainCam.forward * hit.distance, Color.red, 1);
-            Debug.Log("SHOOT");
-            //hit.point;
+            Debug.DrawRay(mainCam.position, mainCam.forward * hit.distance, Color.red, 1);
 
-            bulletTrace.positionCount = 2;
-            bulletTrace.SetPositions(new[] { gunPoint.position, hit.point });
+            bulletTrace.gameObject.SetActive(true);
+
+            //bulletTrace.positionCount = 2;
+            bulletTrace.SetPosition(0, gunPoint.position);
+            bulletTrace.SetPosition(1, hit.point);
+
+            StartCoroutine(GunTraceWaitCor());
         }
+    }
+
+    IEnumerator GunTraceWaitCor()
+    {
+        yield return new WaitForFixedUpdate();
+        bulletTrace.gameObject.SetActive(false);
     }
 }
