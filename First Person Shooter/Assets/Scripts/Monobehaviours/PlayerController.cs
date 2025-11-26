@@ -4,25 +4,24 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     [Header("Movement")]
-    Transform mainCamera;
     [SerializeField] float mouseSensitivity;
     [SerializeField] float moveSpeed;
     [SerializeField] float gravity;
     [SerializeField] float jumpForce;
 
+    Transform mainCamera;
+
     float xRotation;
 
     InputAction moveAction;
     InputAction jumpAction;
+    InputAction shootAction;
     CharacterController characterController;
 
     Vector3 velocity;
 
     [Header("Gun")]
     [SerializeField] Gun gunScript;
-
-    InputAction shootAction;
-
 
     void Start()
     {

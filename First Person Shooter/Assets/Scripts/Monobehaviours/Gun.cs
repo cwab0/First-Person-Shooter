@@ -3,13 +3,15 @@ using UnityEngine;
 
 public class Gun : MonoBehaviour
 {
+    [Header("General")]
+    Transform mainCam;
+    [SerializeField] GunData gunData;
+
+    [Header("Shooting")]
     [SerializeField] Transform gunPoint;
-
     [SerializeField] LayerMask layerMask;
-
     [SerializeField] LineRenderer bulletTrace;
 
-    Transform mainCam;
 
     void Start()
     {
