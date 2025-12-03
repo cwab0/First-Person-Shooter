@@ -12,3 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76a6c167e45ff194e9022af78819c4a1, type: 3}
   m_Name: Regular Gun
   m_EditorClassIdentifier: Assembly-CSharp::GunData
+  gunName: 
+  GunGFX: {fileID: 0}
+  soundEffectShoot: {fileID: 0}
+  soundEffectReload: {fileID: 0}
+  bulletTraceWidth: 0
+  ADS: 0
+  damage: 10
+  fireRate: 0
+  cooldownTimer: 0
+  clipSize: 0
+  maxAmmo: 0
+  reloadTime: 0
+  spreadIncreasePerShot: 0
+  spreadRecoverySpeed: 0
+  maxSpread: 0
+  recoil: 0
+  raising: 0

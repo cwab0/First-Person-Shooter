@@ -23,7 +23,7 @@ public class Gun : MonoBehaviour
             IDamageable damageable = hit.collider.GetComponent<IDamageable>();
             if (damageable != null)
             {
-                damageable.Damage(gunData.damage);
+                damageable.Damage(gunData.damage, hit.point);
             }
 
             // Can later be used for particle effect
@@ -42,6 +42,7 @@ public class Gun : MonoBehaviour
         for (int i = 0; i <= 3; i++)
         {
             yield return new WaitForFixedUpdate();
+            bulletTrace.SetPosition(0, gunPoint.position);
         }
         bulletTrace.gameObject.SetActive(false);
     }
