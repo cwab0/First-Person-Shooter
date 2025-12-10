@@ -23,8 +23,8 @@ MonoBehaviour:
   damage: 10
   fireRate: 0
   cooldownTimer: 0
-  clipSize: 0
-  maxAmmo: 0
+  clipSize: 8
+  maxAmmo: 64
   reloadTime: 0
   spreadIncreasePerShot: 0
   spreadRecoverySpeed: 0

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3934398695161393299}
   - component: {fileID: 8455660295288549373}
   - component: {fileID: 7690820581249741630}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Muzze Flash
   m_TagString: Untagged
   m_Icon: {fileID: 0}

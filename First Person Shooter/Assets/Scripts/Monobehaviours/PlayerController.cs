@@ -3,29 +3,38 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    Transform mainCam;
+
     [Header("Movement")]
     [SerializeField] float mouseSensitivity;
     [SerializeField] float moveSpeed;
     [SerializeField] float gravity;
     [SerializeField] float jumpForce;
 
-    Transform mainCamera;
+    InputAction moveAction;
+    InputAction jumpAction;
 
     float xRotation;
 
-    InputAction moveAction;
-    InputAction jumpAction;
-    InputAction shootAction;
-    CharacterController characterController;
-
     Vector3 velocity;
+
 
     [Header("Gun")]
     [SerializeField] Gun gunScript;
 
+    InputAction shootAction;
+
+
+    [Header("Interact")]
+    [SerializeField] int interactRange;
+    [SerializeField] LayerMask interactLayerMask;
+    InputAction interactAction;
+    CharacterController characterController;
+
+
     void Start()
     {
-        mainCamera = Camera.main.transform;
+        mainCam = Camera.main.transform;
         characterController = GetComponent<CharacterController>();
 
         Cursor.lockState = CursorLockMode.Locked;
@@ -34,6 +43,7 @@ public class PlayerController : MonoBehaviour
         moveAction = InputSystem.actions.FindAction("Move");
         jumpAction = InputSystem.actions.FindAction("Jump");
         shootAction = InputSystem.actions.FindAction("Attack");
+        interactAction = InputSystem.actions.FindAction("Interact");
     }
 
     void Update()
@@ -41,6 +51,7 @@ public class PlayerController : MonoBehaviour
         HandleLooking();
         HandleMovement();
         OnShoot();
+        Interact();
     }
 
     #region Movement
@@ -49,7 +60,8 @@ public class PlayerController : MonoBehaviour
         Vector2 mouseInput = Mouse.current.delta.ReadValue() * Time.deltaTime;
 
         xRotation -= mouseInput.y * mouseSensitivity;
-        mainCamera.localRotation = Quaternion.Euler(xRotation, 0, 0);
+        xRotation = Mathf.Clamp(xRotation, -90, 90);
+        mainCam.localRotation = Quaternion.Euler(xRotation, 0, 0);
         transform.Rotate(Vector3.up * mouseInput.x * mouseSensitivity);
     }
 
@@ -88,5 +100,24 @@ public class PlayerController : MonoBehaviour
             gunScript.Shoot();
         }
     }
+    #endregion
+
+    #region Interact
+
+    void Interact()
+    {
+        if (interactAction.WasPressedThisFrame())
+        {
+            if (Physics.Raycast(mainCam.position, mainCam.forward, out RaycastHit hit, interactRange, interactLayerMask))
+            {
+                IInteractable interactable = hit.collider.GetComponent<IInteractable>();
+                if (interactable != null)
+                {
+                    interactable.Interact();
+                }
+            }
+        }
+    }
+
     #endregion
 }
