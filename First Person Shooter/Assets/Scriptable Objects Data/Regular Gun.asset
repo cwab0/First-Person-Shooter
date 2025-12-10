@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GunData
   gunName: 
   GunGFX: {fileID: 0}
+  muzzleFlash: {fileID: 8455660295288549373, guid: 232ea4dd034850a448d5a408080fd759, type: 3}
+  hitImpact: {fileID: 4144449261007538518, guid: 590da7407422d6749a218ddc85daf837, type: 3}
   soundEffectShoot: {fileID: 0}
   soundEffectReload: {fileID: 0}
   bulletTraceWidth: 0

@@ -6,6 +6,8 @@ public class GunData : ScriptableObject
     [Header("Visual & Effects")]
     public string gunName;
     public GameObject GunGFX;
+    public ParticleSystem muzzleFlash;
+    public ParticleSystem hitImpact;
     public AudioClip soundEffectShoot;
     public AudioClip soundEffectReload;
     public float bulletTraceWidth;

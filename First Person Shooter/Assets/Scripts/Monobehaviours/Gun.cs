@@ -9,6 +9,8 @@ public class Gun : MonoBehaviour
     [Header("Shooting")]
     [SerializeField] Transform gunPoint;
     [SerializeField] LayerMask layerMask;
+
+    [Header("Visual")]
     [SerializeField] LineRenderer bulletTrace;
 
 
@@ -26,8 +28,9 @@ public class Gun : MonoBehaviour
                 damageable.Damage(gunData.damage, hit.point);
             }
 
-            // Can later be used for particle effect
-            // Instantiate(hitImpact, hit.point, Quaternion.identity);
+            // Muzzle flash using particles
+            Instantiate(gunData.muzzleFlash, gunPoint.position, transform.rotation);
+            Instantiate(gunData.hitImpact, hit.point, transform.rotation);
 
             bulletTrace.gameObject.SetActive(true);
             //bulletTrace.positionCount = 2;
