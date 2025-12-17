@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3934398695161393299}
   - component: {fileID: 8455660295288549373}
   - component: {fileID: 7690820581249741630}
+  - component: {fileID: -3042478465842467896}
   m_Layer: 1
   m_Name: Muzze Flash
   m_TagString: Untagged
@@ -4903,3 +4904,15 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &-3042478465842467896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6014120381591474211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0d05f4fa04467544b3757f88518ed83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DeleteParticle

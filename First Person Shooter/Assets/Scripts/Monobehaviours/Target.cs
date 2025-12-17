@@ -9,23 +9,20 @@ public class Target : MonoBehaviour, IDamageable
     [SerializeField] int bullseyeAmplifier = 3;
 
     [Header("Other")]
-    [SerializeField] GameObject[] targetBits;
+    [SerializeField] GameObject targetFragmentLarge;
+    [SerializeField] GameObject targetFragmentSmall;
 
 
-    public void Damage(float damageAmount, Vector3 hitPos)
+    public void Damage(int damageAmount, Vector3 hitPos)
     {
-        // Covert damage to an int
-        int i;
-        i = Mathf.RoundToInt(damageAmount);
-
         // Check if bullseye and damage accordingly
         if (Vector3.Distance(gameObject.transform.position, hitPos) < bullseyeDistance)
         {
-            hitPoints -= i;
+            hitPoints -= damageAmount;
         }
         else
         {
-            hitPoints -= i * bullseyeAmplifier;
+            hitPoints -= damageAmount * bullseyeAmplifier;
         }
 
         if (hitPoints <= 0)

@@ -2,29 +2,29 @@ using UnityEngine;
 
 public class LightSwitch : MonoBehaviour, IInteractable, IDamageable
 {
-    [SerializeField] GameObject lamp;
+    [SerializeField] Light lamp;
 
     public void Interact()
     {
-        if (lamp.activeSelf)
+        if (lamp.enabled == true)
         {
-            lamp.SetActive(false);
+            lamp.enabled = false;
         }
         else
         {
-            lamp.SetActive(true);
+            lamp.enabled = true;
         }
     }
 
-    public void Damage(float damage, Vector3 hitPos)
+    public void Damage(int damage, Vector3 hitPos)
     {
-        if (lamp.activeSelf)
+        if (lamp.enabled == true)
         {
-            lamp.SetActive(false);
+            lamp.enabled = false;
         }
         else
         {
-            lamp.SetActive(true);
+            lamp.enabled = true;
         }
     }
 }

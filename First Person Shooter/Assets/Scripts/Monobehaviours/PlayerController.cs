@@ -95,7 +95,7 @@ public class PlayerController : MonoBehaviour
     #region Gun
     void OnShoot()
     {
-        if (shootAction.WasPerformedThisFrame())
+        if (shootAction.IsPressed())
         {
             gunScript.Shoot();
         }

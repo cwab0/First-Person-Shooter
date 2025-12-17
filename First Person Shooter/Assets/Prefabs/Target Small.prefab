@@ -105,4 +105,5 @@ MonoBehaviour:
   hitPoints: 30
   bullseyeDistance: 1
   bullseyeAmplifier: 3
-  targetBits: []
+  targetFragmentLarge: {fileID: 919132149155446097, guid: cfb3f1c6dcc39a6439e5a39699bfdcc0, type: 3}
+  targetFragmentSmall: {fileID: 919132149155446097, guid: e4c058c803e7520418f9fca394c7d7fa, type: 3}

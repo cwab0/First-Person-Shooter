@@ -3,14 +3,18 @@ using UnityEngine;
 
 public class DeleteParticle : MonoBehaviour
 {
+    ParticleSystem particle;
+
     void Start()
     {
-        DeleteCor();
-    }
+        particle = GetComponent<ParticleSystem>();
 
-    IEnumerator DeleteCor()
+    }
+    private void Update()
     {
-        // check duration of particle system and destroy gameobject
-        yield return null;
+        if (!particle.isPlaying)
+        {
+            Destroy(gameObject);
+        }
     }
 }

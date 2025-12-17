@@ -16,7 +16,6 @@ public class GunData : ScriptableObject
     [Header("Main Stats")]
     public int damage;
     public float fireRate;
-    public float cooldownTimer;
 
     [Header("Ammo")]
     public int clipSize;
