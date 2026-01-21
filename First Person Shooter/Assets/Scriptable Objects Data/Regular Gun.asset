@@ -24,9 +24,9 @@ MonoBehaviour:
   fireRate: 0.2
   clipSize: 8
   maxAmmo: 64
-  reloadTime: 0
+  reloadTime: 1
   spreadIncreasePerShot: 0
   spreadRecoverySpeed: 0
   maxSpread: 0
   recoil: 0
-  raising: 0
+  raising: 10

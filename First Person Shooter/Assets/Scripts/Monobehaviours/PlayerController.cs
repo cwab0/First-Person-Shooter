@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.XR;
 
 public class PlayerController : MonoBehaviour
 {
@@ -8,28 +9,23 @@ public class PlayerController : MonoBehaviour
     [Header("Movement")]
     [SerializeField] float mouseSensitivity;
     [SerializeField] float moveSpeed;
+    [SerializeField] float sprintMultiplier;
     [SerializeField] float gravity;
     [SerializeField] float jumpForce;
 
     InputAction moveAction;
     InputAction jumpAction;
+    InputAction sprintAction;
 
     float xRotation;
 
     Vector3 velocity;
 
-
-    [Header("Gun")]
-    [SerializeField] Gun gunScript;
-
-    InputAction shootAction;
-
-
     [Header("Interact")]
     [SerializeField] int interactRange;
     [SerializeField] LayerMask interactLayerMask;
-    InputAction interactAction;
     CharacterController characterController;
+    InputAction interactAction;
 
 
     void Start()
@@ -42,15 +38,14 @@ public class PlayerController : MonoBehaviour
 
         moveAction = InputSystem.actions.FindAction("Move");
         jumpAction = InputSystem.actions.FindAction("Jump");
-        shootAction = InputSystem.actions.FindAction("Attack");
         interactAction = InputSystem.actions.FindAction("Interact");
+        sprintAction = InputSystem.actions.FindAction("Sprint");
     }
 
     void Update()
     {
         HandleLooking();
         HandleMovement();
-        OnShoot();
         Interact();
     }
 
@@ -67,12 +62,26 @@ public class PlayerController : MonoBehaviour
 
     void HandleMovement()
     {
+        // Sets movement
         Vector2 moveVector = moveAction.ReadValue<Vector2>();
         Vector3 move = transform.right * moveVector.x + transform.forward * moveVector.y;
-        Vector3 horisontalMove = move * moveSpeed;
 
+        // Sprinting
+        float newMoveSpeed;
+        if (sprintAction.IsPressed() && moveVector.y > 0)
+        {
+            newMoveSpeed = moveSpeed * sprintMultiplier;
+        }
+        else
+        {
+            newMoveSpeed = moveSpeed;
+        }
+
+        // Sets more movement
+        Vector3 horisontalMove = move * newMoveSpeed;
         Vector3 totalMove = (horisontalMove + velocity) * Time.deltaTime;
 
+        // Jumping
         if (characterController.isGrounded)
         {
             if (velocity.y < 0)
@@ -86,19 +95,11 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        // Gravity
         velocity.y += gravity * Time.deltaTime;
 
+        // Move player
         characterController.Move(totalMove);
-    }
-    #endregion
-
-    #region Gun
-    void OnShoot()
-    {
-        if (shootAction.IsPressed())
-        {
-            gunScript.Shoot();
-        }
     }
     #endregion
 

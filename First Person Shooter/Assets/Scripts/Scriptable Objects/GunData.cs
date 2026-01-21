@@ -20,7 +20,7 @@ public class GunData : ScriptableObject
     [Header("Ammo")]
     public int clipSize;
     public int maxAmmo;
-    public int reloadTime;
+    public float reloadTime;
 
     [Header("Gun Spread & Recoil")]
     public float spreadIncreasePerShot;
@@ -28,5 +28,4 @@ public class GunData : ScriptableObject
     public float maxSpread;
     public float recoil;
     public int raising;
-
 }
