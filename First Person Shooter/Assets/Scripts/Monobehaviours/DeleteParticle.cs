@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class DeleteParticle : MonoBehaviour
@@ -8,7 +7,6 @@ public class DeleteParticle : MonoBehaviour
     void Start()
     {
         particle = GetComponent<ParticleSystem>();
-
     }
     private void Update()
     {

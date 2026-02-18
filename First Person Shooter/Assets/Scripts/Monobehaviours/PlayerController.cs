@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR;
@@ -12,6 +13,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float sprintMultiplier;
     [SerializeField] float gravity;
     [SerializeField] float jumpForce;
+    [SerializeField] int normalFOV;
+    [SerializeField] int sprintFOV;
+    [SerializeField] float FOVSmoothTime;
+    float FOVCurrentVelo;
 
     InputAction moveAction;
     InputAction jumpAction;
@@ -71,10 +76,12 @@ public class PlayerController : MonoBehaviour
         if (sprintAction.IsPressed() && moveVector.y > 0)
         {
             newMoveSpeed = moveSpeed * sprintMultiplier;
+            Camera.main.fieldOfView = Mathf.SmoothDamp(normalFOV, sprintFOV, ref FOVCurrentVelo, FOVSmoothTime);
         }
         else
         {
             newMoveSpeed = moveSpeed;
+            Camera.main.fieldOfView = Mathf.SmoothDamp(sprintFOV, normalFOV, ref FOVCurrentVelo, FOVSmoothTime);
         }
 
         // Sets more movement
