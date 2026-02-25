@@ -76,12 +76,12 @@ public class PlayerController : MonoBehaviour
         if (sprintAction.IsPressed() && moveVector.y > 0)
         {
             newMoveSpeed = moveSpeed * sprintMultiplier;
-            Camera.main.fieldOfView = Mathf.SmoothDamp(normalFOV, sprintFOV, ref FOVCurrentVelo, FOVSmoothTime);
+            Camera.main.fieldOfView = Mathf.SmoothDamp(Camera.main.fieldOfView, sprintFOV, ref FOVCurrentVelo, FOVSmoothTime);
         }
         else
         {
             newMoveSpeed = moveSpeed;
-            Camera.main.fieldOfView = Mathf.SmoothDamp(sprintFOV, normalFOV, ref FOVCurrentVelo, FOVSmoothTime);
+            Camera.main.fieldOfView = Mathf.SmoothDamp(Camera.main.fieldOfView, normalFOV, ref FOVCurrentVelo, FOVSmoothTime);
         }
 
         // Sets more movement

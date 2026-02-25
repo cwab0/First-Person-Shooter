@@ -262,8 +262,8 @@ MonoBehaviour:
   gravity: -30
   jumpForce: 12
   normalFOV: 60
-  sprintFOV: 65
-  FOVSmoothTime: 1
+  sprintFOV: 70
+  FOVSmoothTime: 0.1
   interactRange: 4
   interactLayerMask:
     serializedVersion: 2
