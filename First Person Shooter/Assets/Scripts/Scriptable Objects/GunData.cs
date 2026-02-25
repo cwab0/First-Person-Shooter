@@ -16,6 +16,7 @@ public class GunData : ScriptableObject
     [Header("Main Stats")]
     public int damage;
     public float fireRate;
+    public bool shootGranade;
 
     [Header("Ammo")]
     public int clipSize;
@@ -26,6 +27,5 @@ public class GunData : ScriptableObject
     public float spreadIncreasePerShot;
     public float spreadRecoverySpeed;
     public float maxSpread;
-    public float recoil;
-    public int raising;
+    public int kickback;
 }

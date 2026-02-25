@@ -1,7 +1,6 @@
-using Unity.VisualScripting;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.XR;
 
 public class PlayerController : MonoBehaviour
 {
@@ -16,7 +15,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] int normalFOV;
     [SerializeField] int sprintFOV;
     [SerializeField] float FOVSmoothTime;
-    float FOVCurrentVelo;
+    [SerializeField] float sprintSmoothTime;
+    float sprintRefFloat;
+    float FOVRefFloat;
+    float kickbackRefFloat;
 
     InputAction moveAction;
     InputAction jumpAction;
@@ -32,7 +34,7 @@ public class PlayerController : MonoBehaviour
     CharacterController characterController;
     InputAction interactAction;
 
-
+    float cameraKick;
     void Start()
     {
         mainCam = Camera.main.transform;
@@ -52,9 +54,15 @@ public class PlayerController : MonoBehaviour
         HandleLooking();
         HandleMovement();
         Interact();
+
+        //xRotation -= cameraKick;
+
+        //cameraKick = Mathf.MoveTowards(cameraKick, 0, Time.deltaTime * 20);
+        
+        //xRotation = Mathf.SmoothDamp(xRotation, xRotation - kickbackStrength, ref kickbackRefFloat, 0.3f);
     }
 
-    #region Movement
+    #region Camera
     void HandleLooking()
     {
         Vector2 mouseInput = Mouse.current.delta.ReadValue() * Time.deltaTime;
@@ -64,6 +72,15 @@ public class PlayerController : MonoBehaviour
         mainCam.localRotation = Quaternion.Euler(xRotation, 0, 0);
         transform.Rotate(Vector3.up * mouseInput.x * mouseSensitivity);
     }
+
+    public void ApplyKickback(float kickbackStrength)
+    {
+        //cameraKick = 2;
+    }
+
+    #endregion
+
+    #region Movement
 
     void HandleMovement()
     {
@@ -76,12 +93,13 @@ public class PlayerController : MonoBehaviour
         if (sprintAction.IsPressed() && moveVector.y > 0)
         {
             newMoveSpeed = moveSpeed * sprintMultiplier;
-            Camera.main.fieldOfView = Mathf.SmoothDamp(Camera.main.fieldOfView, sprintFOV, ref FOVCurrentVelo, FOVSmoothTime);
+            Camera.main.fieldOfView = Mathf.SmoothDamp(Camera.main.fieldOfView, sprintFOV, ref FOVRefFloat, FOVSmoothTime);
         }
         else
         {
+            //newMoveSpeed = Mathf.SmoothDamp(moveVector.y, moveSpeed, ref currentSprintVelo, sprintSmoothTime);
             newMoveSpeed = moveSpeed;
-            Camera.main.fieldOfView = Mathf.SmoothDamp(Camera.main.fieldOfView, normalFOV, ref FOVCurrentVelo, FOVSmoothTime);
+            Camera.main.fieldOfView = Mathf.SmoothDamp(Camera.main.fieldOfView, normalFOV, ref FOVRefFloat, FOVSmoothTime);
         }
 
         // Sets more movement

@@ -2,12 +2,12 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
 
 public class Gun : MonoBehaviour
 {
     [Header("General")]
     [SerializeField] GunData gunData;
+    [SerializeField] PlayerController playerController;
 
     [Header("Shooting")]
     [SerializeField] Transform gunPoint;
@@ -24,11 +24,16 @@ public class Gun : MonoBehaviour
 
     [Header("Visual")]
     [SerializeField] LineRenderer bulletTrace;
+    Animator gunAnimator;
+
 
     void Start()
     {
         reloadAction = InputSystem.actions.FindAction("Reload");
         shootAction = InputSystem.actions.FindAction("Attack");
+
+        gunAnimator = GetComponent<Animator>();
+
 
         clipAmmo = gunData.clipSize;
         totAmmo = gunData.maxAmmo;
@@ -43,46 +48,47 @@ public class Gun : MonoBehaviour
     #region Shooting
     void OnShoot()
     {
-        if (shootAction.IsPressed())
+        if (shootAction.IsPressed() && canShoot)
         {
             Shoot();
-            Debug.Log("Shoot is pressed");
         }
     }
 
     public void Shoot()
     {
-        if (canShoot)
+        Transform mainCam = Camera.main.transform;
+        if (Physics.Raycast(mainCam.position, mainCam.forward, out RaycastHit hit, Mathf.Infinity, layerMask))
         {
-            Transform mainCam = Camera.main.transform;
-            if (Physics.Raycast(mainCam.position, mainCam.forward, out RaycastHit hit, Mathf.Infinity, layerMask))
+            if (!gunOnCooldown)
             {
-                if (!gunOnCooldown)
+                StartCoroutine(GunCooldownCor());
+
+                // Debug ray
+                Debug.DrawRay(mainCam.position, mainCam.forward * hit.distance, Color.red, 1);
+
+                // Damages whatever it hits if it can be damaged
+                IDamageable damageable = hit.collider.GetComponent<IDamageable>();
+                if (damageable != null)
                 {
-                    StartCoroutine(GunCooldownCor());
-
-                    // Debug ray
-                    Debug.DrawRay(mainCam.position, mainCam.forward * hit.distance, Color.red, 1);
-
-                    // Damages whatever it hits if it can be damaged
-                    IDamageable damageable = hit.collider.GetComponent<IDamageable>();
-                    if (damageable != null)
-                    {
-                        damageable.Damage(gunData.damage, hit.point);
-                    }
-
-                    clipAmmo--;
-
-                    // Muzzle flash using particles
-                    Instantiate(gunData.muzzleFlash, gunPoint.position, transform.rotation);
-                    Instantiate(gunData.hitImpact, hit.point, transform.rotation);
-
-                    bulletTrace.gameObject.SetActive(true);
-                    //bulletTrace.positionCount = 2;
-                    bulletTrace.SetPosition(0, gunPoint.position); // Start pos of line
-                    bulletTrace.SetPosition(1, hit.point); // End pos of line
-                    StartCoroutine(GunTraceWaitCor());
+                    damageable.Damage(gunData.damage, hit.point);
                 }
+
+                clipAmmo--;
+
+                // Apply kickback/recoil to the camera
+                playerController.ApplyKickback(gunData.kickback);
+                // Apply kickback/recoil to the gun
+                gunAnimator.SetTrigger("Shoot");
+
+                // Muzzle flash using particles
+                Instantiate(gunData.muzzleFlash, gunPoint.position, transform.rotation);
+                Instantiate(gunData.hitImpact, hit.point, transform.rotation);
+
+                bulletTrace.gameObject.SetActive(true);
+                //bulletTrace.positionCount = 2;
+                bulletTrace.SetPosition(0, gunPoint.position); // Start pos of line
+                bulletTrace.SetPosition(1, hit.point); // End pos of line
+                StartCoroutine(GunTraceWaitCor());
             }
         }
     }
@@ -108,9 +114,10 @@ public class Gun : MonoBehaviour
     #region Reload
     void HandleReloading()
     {
-        if (reloadAction.WasPressedThisFrame())
+        if (reloadAction.WasPressedThisFrame() && clipAmmo != gunData.clipSize)
         {
             StartCoroutine("ReloadCor");
+            gunAnimator.SetTrigger("Reload");
         }
 
         if (clipAmmo <= 0)

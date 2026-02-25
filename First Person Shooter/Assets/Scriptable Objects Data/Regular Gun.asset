@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76a6c167e45ff194e9022af78819c4a1, type: 3}
   m_Name: Regular Gun
   m_EditorClassIdentifier: Assembly-CSharp::GunData
-  gunName: 
+  gunName: Gun
   GunGFX: {fileID: 0}
   muzzleFlash: {fileID: 8455660295288549373, guid: 232ea4dd034850a448d5a408080fd759, type: 3}
   hitImpact: {fileID: 4144449261007538518, guid: 590da7407422d6749a218ddc85daf837, type: 3}
@@ -21,12 +21,12 @@ MonoBehaviour:
   bulletTraceWidth: 0
   ADS: 0
   damage: 10
-  fireRate: 0.2
-  clipSize: 8
-  maxAmmo: 64
+  fireRate: 0.15
+  shootGranade: 0
+  clipSize: 30
+  maxAmmo: 150
   reloadTime: 1
   spreadIncreasePerShot: 0
   spreadRecoverySpeed: 0
   maxSpread: 0
-  recoil: 0
-  raising: 10
+  kickback: 30

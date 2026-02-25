@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class Target : MonoBehaviour, IDamageable
 {
@@ -19,10 +18,12 @@ public class Target : MonoBehaviour, IDamageable
         if (Vector3.Distance(gameObject.transform.position, hitPos) < bullseyeDistance)
         {
             hitPoints -= damageAmount;
+            Debug.Log("Hit target");
         }
         else
         {
             hitPoints -= damageAmount * bullseyeAmplifier;
+            Debug.Log("BULLSEYE");
         }
 
         if (hitPoints <= 0)
